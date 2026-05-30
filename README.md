@@ -37,7 +37,7 @@ It performs both positive and negative test scenarios including validation check
 ## ⚙️ Setup Instructions
 
 ### 1. Clone Project
-
+https://github.com/sandu20021111/safora_contact-form-automation.git
 
 ### 2. Install Dependencies
 Make sure Maven dependency exists
@@ -51,4 +51,10 @@ data-sitekey="ACTUAL_SITE_KEY"
 
 <!-- After -->
 data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+
+---
+
+## 👨‍💻 Author
+Name: Sanduni Vihara
+Email: sandunivihara228@gmail.com
 
