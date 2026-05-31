@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.List;
 
@@ -300,6 +302,7 @@ public class ContactFormAutomation {
             // Click submit without filling form
             actions.moveToElement(submitEmpty).click().perform();
             System.out.println("Submitted empty form for validation test");
+            takeScreenshot(driver, "validation");
 
             Thread.sleep(2000);
 
@@ -311,6 +314,7 @@ public class ContactFormAutomation {
                 );
 
                 System.out.println(" VALIDATION PASSED: " + errorMsg.getText());
+                takeScreenshot(driver, "validation passed");
 
             } catch (Exception e) {
                 // Check for HTML5 required attributes
@@ -320,6 +324,7 @@ public class ContactFormAutomation {
 
                     if (required != null && required.equals("true")) {
                         System.out.println(" VALIDATION PASSED (HTML5 required attribute detected)");
+                        takeScreenshot(driver, "after_validation");
                     } else {
                         System.out.println(" VALIDATION FAILED - No validation message or required attribute found");
 
@@ -341,19 +346,19 @@ public class ContactFormAutomation {
 
     private static void takeScreenshot(WebDriver driver, String fileName) {
         try {
-            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            File destFile = new File("screenshots/" + fileName + "_" + System.currentTimeMillis() + ".png");
+            File screenshot = ((TakesScreenshot) driver)
+                    .getScreenshotAs(OutputType.FILE);
 
-            // Create directory if not exists
-            destFile.getParentFile().mkdirs();
+            File destFile = new File("screenshots/" + fileName + ".png");
 
-            // Copy file (using Java 7+ Files.copy)
-            java.nio.file.Files.copy(screenshot.toPath(), destFile.toPath(),
-                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(screenshot.toPath(),
+                    destFile.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING);
 
-            System.out.println("Screenshot saved: " + destFile.getPath());
+            System.out.println("Screenshot saved: " + destFile.getAbsolutePath());
+
         } catch (Exception e) {
-            System.out.println("Failed to take screenshot: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
